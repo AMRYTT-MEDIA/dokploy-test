@@ -11,7 +11,7 @@ interface Todo {
   updatedAt?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 export default function TodosPage() {
   const [todos, setTodos] = useState<Todo[]>([]);
