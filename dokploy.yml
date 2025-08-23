@@ -1,0 +1,53 @@
+# Dokploy configuration file
+version: '1'
+
+# Application configuration
+app:
+  name: "todo-app-dokploy-test"
+  description: "Simple todo app for testing Dokploy deployment features"
+  
+# Services configuration
+services:
+  backend:
+    name: "todo-backend"
+    type: "docker"
+    dockerfile: "./backend/Dockerfile"
+    context: "./backend"
+    port: 5000
+    environment:
+      NODE_ENV: "production"
+      PORT: "5000"
+    healthcheck:
+      path: "/health"
+      interval: 30
+      timeout: 10
+      retries: 3
+    
+  frontend:
+    name: "todo-frontend"
+    type: "docker"
+    dockerfile: "./frontend/Dockerfile"
+    context: "./frontend"
+    port: 3000
+    environment:
+      NODE_ENV: "production"
+      PORT: "3000"
+      NEXT_PUBLIC_API_URL: "${BACKEND_URL}"
+    depends_on:
+      - backend
+    healthcheck:
+      path: "/"
+      interval: 30
+      timeout: 10
+      retries: 3
+
+# Auto deploy configuration
+auto_deploy:
+  enabled: true
+  branch: "test-1"
+  
+# Preview deployments configuration
+preview_deployments:
+  enabled: true
+  auto_delete: true
+  retention_days: 7
