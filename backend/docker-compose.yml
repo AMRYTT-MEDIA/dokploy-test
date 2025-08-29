@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - FRONTEND_URL=https://dev.amrytt.com
+      - PORT=5001
